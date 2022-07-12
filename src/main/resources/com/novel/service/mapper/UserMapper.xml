@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.service.mapper.UserMapper">
+
+    <select id="selectUserInfo" resultType="com.novel.service.data.UserInfoVO">
+        select * from user_info where user_id = #{id} and user_pwd = #{pwd}
+    </select>
+
+    <insert id="insertUserInfo">
+        INSERT INTO user_info
+        (user_id, user_pwd, user_name, user_nickname, user_email, user_birth)
+        VALUES (#{user_id}, #{user_pwd}, #{user_name}, #{user_nickname}, #{user_email}, #{user_birth});
+    </insert>
+
+    <select id="selectFindId" resultType="java.lang.String">
+        select user_id from user_info where user_id = #{id} and user_nickname = #{nickname}
+    </select>
+
+    <select id="selectFindPwd" resultType="java.lang.Integer">
+        select user_seq from user_info where user_id = #{id} and user_email = #{eamil}
+    </select>
+    
+
+    <select id="isDuplicatedId" resultType="java.lang.Boolean">
+        select count(*) from user_info where user_id = #{id}
+    </select> 
+    <select id="isDuplicatedEmail" resultType="java.lang.Boolean">
+        select count(*) from user_info where user_email = #{email}
+    </select> 
+    <select id="isDuplicatedNickname" resultType="java.lang.Boolean">
+        select count(*) from user_info where user_nickname = #{nickname}
+    </select> 
+
+</mapper>
