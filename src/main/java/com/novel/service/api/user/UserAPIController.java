@@ -24,7 +24,7 @@ import com.novel.service.util.AESAlgorithm;
 @RequestMapping("/api/user")
 public class UserAPIController {
     @Autowired UserMapper u_mapper ;
-    // 로그인
+    // 로그인, 로그아웃
     @GetMapping("/login")
     public Map<String,Object> getUserLogin(@RequestParam @Nullable String id, @RequestParam @Nullable String pwd,HttpSession session) throws Exception
     {
@@ -48,6 +48,15 @@ public class UserAPIController {
         session.setAttribute("user", user);
         return map ;
     }
+
+    @GetMapping("/logout")
+    public void getUserLogout(HttpSession session)
+    {
+        session.invalidate();
+        
+
+    }
+
     //회원가입
     @PutMapping("/join")
     public Map<String,Object> putUser(@RequestBody UserInfoVO data) throws Exception

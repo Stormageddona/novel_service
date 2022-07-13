@@ -31,4 +31,17 @@ $(function()
             }
         })
     })
+
+    $("#logout").click(function()
+    {
+        $.ajax
+        ({
+            url:"api/user/logout", type:"get",
+            success:function()
+            {
+                location.href="/"
+            }
+        })
+
+    })
 })

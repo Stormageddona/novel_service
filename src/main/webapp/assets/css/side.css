@@ -1,0 +1,4 @@
+.side {width: 200px;height: 1500px;border: 1px solid #000;float: inline-end;}
+.side .login_box {width: 240;height: 80px;top: 0;padding: 15px;
+    border: 1px solid #000;}
+#user_logout {float: right;}

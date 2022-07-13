@@ -2,9 +2,6 @@ html {width: 1000px;margin: 0 auto}
 header{width: 1000px;height: 150px;border: 1px solid #000;z-index: 9999;position: relative;margin: 0 auto;text-align: center;}
 header .title {height: 100px;border: 1px solid #000;}
 header > a {margin: 0 30px;}
-.side {width: 200px;height: 1500px;border: 1px solid #000;float: inline-end;}
-.side .login_box {width: 240;height: 80px;top: 0;padding: 25px;
-    border: 1px solid #000;}
 
 main {margin: 0 auto; width: 1000px;}
 .main {display: inline-block;border: 1px solid #000;position: relative;height: 1500px;width: 796px;padding: 0;}
