@@ -5,9 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.novel.service.util.AESAlgorithm;
 
 @Controller
 @RequestMapping("/user")
@@ -30,4 +27,6 @@ public class UserController {
         model.addAttribute("seq",seq) ;
         return "/user/pwd" ;
     }
+
+
 }

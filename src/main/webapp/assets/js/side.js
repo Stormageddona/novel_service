@@ -44,4 +44,10 @@ $(function()
         })
 
     })
+
+
+    $("#write").click(function()
+    {
+        location.href="/novel/reg"
+    })
 })

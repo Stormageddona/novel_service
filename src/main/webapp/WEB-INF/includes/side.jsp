@@ -26,6 +26,7 @@
                 <c:if test="${user.user_grade == 2}"><button id="my_novel">내 소설 관리</button></c:if>
                 <c:if test="${user.user_grade == 1}"><p>내가 쓴 소설이 없습니다.</p></c:if>
                 <button id="my_status">내 정보</button>
+                <button id="write">소설쓰기</button>
             </c:if>
         </div>
     </aside>
