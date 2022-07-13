@@ -39,12 +39,27 @@ $(function()
 
         $.ajax
         ({
-            url:"api/user/find?value1="+$("#find_pwd_id").val()+"&value2="+$("#find_pwd_email").val()+"&type=2",
+            url:"/api/user/find?value1="+$("#find_pwd_id").val()+"&value2="+$("#find_pwd_email").val()+"&type=2",
             type:"get",
             success:function(result)
             {
-                alert(result.message)
-                location.href="user/find/pwd?seq="+result.seq
+                location.href="/user/value/pwd/"+result.seq
+            }
+        })
+    })
+
+    $("#newpass_submit").click(function()
+    {
+        if (!confirm("새로운 비밀번호로 변경하시겠습니까?")) return ;
+        
+        $.ajax
+        ({
+            url:"/api/user/pwd/"+$(this).attr("data-type")+"?pwd="+$("#input_newpass").val(),
+            type:"patch",
+            success:function(result)
+            {
+                alert(result.message) ;
+                location.href="/" ;
             }
         })
     })

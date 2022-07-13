@@ -3,6 +3,7 @@ package com.novel.service.controller.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,11 +24,10 @@ public class UserController {
         return "/user/find" ;
     }
 
-    @GetMapping("/find/pwd")
-    public String getChangePwd(@RequestParam String seq,Model model) throws Exception
+    @GetMapping("/value/pwd/{seq}")
+    public String getChangePwd(@PathVariable String seq,Model model) throws Exception
     {
-        String temp = AESAlgorithm.Decrypt(seq) ;
-        model.addAttribute("seq",temp) ;
-        return "/pwd" ;
+        model.addAttribute("seq",seq) ;
+        return "/user/pwd" ;
     }
 }

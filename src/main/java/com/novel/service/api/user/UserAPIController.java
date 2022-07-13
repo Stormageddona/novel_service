@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,8 +77,22 @@ public class UserAPIController {
         }
 
         return map ;
-
     }
+
+    @PatchMapping("/pwd/{seq}")
+    public Map<String,Object> updateUserPwd(@PathVariable String seq,@RequestParam String pwd) throws Exception
+    {
+        Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+        seq = AESAlgorithm.Decrypt(seq) ;
+        pwd = AESAlgorithm.Encrypt(pwd) ;
+        Integer tempseq = Integer.parseInt(seq) ;
+        u_mapper.updateUserInfoPwd(tempseq, pwd) ;
+        map.put("status", true) ;
+        map.put("message", "비밀번호 변경이 완료되었습니다.") ;
+        return map ;
+    }
+
+    // 회원가입
     @GetMapping("/join")
     public Map<String,Object> DuplicatedChk(@RequestParam String type, @RequestParam String value)
     {

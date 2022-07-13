@@ -14,13 +14,16 @@
     </insert>
 
     <select id="selectFindId" resultType="java.lang.String">
-        select user_id from user_info where user_id = #{id} and user_nickname = #{nickname}
+        select user_id from user_info where user_email = #{email} and user_nickname = #{nickname}
     </select>
 
-    <select id="selectFindPwd" resultType="java.lang.Integer">
-        select user_seq from user_info where user_id = #{id} and user_email = #{eamil}
+    <select id="selectFindPwd" resultType="java.lang.String">
+        select user_seq from user_info where user_id = #{id} and user_email = #{email}
     </select>
     
+    <update id="updateUserInfoPwd">
+        update user_info set user_pwd = #{pwd} where user_seq = #{seq}
+    </update>
 
     <select id="isDuplicatedId" resultType="java.lang.Boolean">
         select count(*) from user_info where user_id = #{id}
