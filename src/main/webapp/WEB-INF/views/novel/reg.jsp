@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="/assets/js/novel/reg.js"></script>
+
 </head>
 <body>
     <main>
@@ -19,16 +21,19 @@
             <tr>
                 <td>장르</td>
                 <td>
-                    <!-- <%--<select name="novel_genre" id="">
-                        <c:forEach item="${genre_list}" var="item">
-                            <option value="${item.genre_seq}">${item.genre_name}</option>
+                    <select id="novel_genre">
+                        <c:forEach items="${genre_list}" var="item">
+                            <option value="${item.gen_seq}">${item.gen_name}</option>
                         </c:forEach>
-                    </select>--%> -->
+                    </select>
                 </td>
             </tr>
             <tr>
                 <td>표지</td>
-                <td><input type="file" id="novel_image"></td>
+                <form class="novel_img_form" hidden>
+                    <td><input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png"></td>
+                </form>
+                <div class="novel_image"></div>
             </tr>
             <tr>
                 <td>설명</td>
@@ -36,23 +41,23 @@
             </tr>
             <tr>
                 <td>연재주기</td>
-                <td>
-                    <label><input type="checkbox" class="novel_day" data-seq="1">일</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="2">월</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="3">화</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="4">수</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="5">목</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="6">금</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="7">토</label>
-                    <label><input type="checkbox" class="novel_day" data-seq="0">비정기 연재</label>
+                <td class="novel_day">
+                    <label><input type="checkbox" data-seq="1">일</label>
+                    <label><input type="checkbox" data-seq="2">월</label>
+                    <label><input type="checkbox" data-seq="3">화</label>
+                    <label><input type="checkbox" data-seq="4">수</label>
+                    <label><input type="checkbox" data-seq="5">목</label>
+                    <label><input type="checkbox" data-seq="6">금</label>
+                    <label><input type="checkbox" data-seq="7">토</label>
+                    <label><input type="checkbox" data-seq="0">비정기 연재</label>
                 </td>
             </tr>
             <tr>
                 <td>연령제한</td>
-                <td>
-                    <label><input type="radio" name="age" class="novel_age" data-seq="1">전연령</label>
-                    <label><input type="radio" name="age" class="novel_age" data-seq="2">15세 이상 권장</label>
-                    <label><input type="radio" name="age" class="novel_age" data-seq="3">청소년 열람불가</label>
+                <td class="novel_age">
+                    <label><input type="radio" name="age" data-seq="1" checked>전연령</label>
+                    <label><input type="radio" name="age" data-seq="2">15세 이상 권장</label>
+                    <label><input type="radio" name="age" data-seq="3">청소년 열람불가</label>
                 </td>
             </tr>
         </table>

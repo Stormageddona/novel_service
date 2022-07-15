@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserInfoVO {
     private Integer user_seq ;
     private Integer user_img_seq;
+
     private String user_id;
     private String user_pwd;
     private String user_name;

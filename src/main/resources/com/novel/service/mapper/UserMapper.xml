@@ -25,6 +25,10 @@
         update user_info set user_pwd = #{pwd} where user_seq = #{seq}
     </update>
 
+    <update id="updateUserInfoGrade">
+        update user_info set user_grade = #{grade} where user_seq = #{seq}
+    </update>
+
     <select id="isDuplicatedId" resultType="java.lang.Boolean">
         select count(*) from user_info where user_id = #{id}
     </select> 

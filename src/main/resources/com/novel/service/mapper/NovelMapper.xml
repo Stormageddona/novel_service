@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.service.mapper.NovelMapper">    
+    
+    <select id="selectGenreList" resultType="com.novel.service.data.GenreInfoVO">
+        select * from genre_info
+    </select>
+
+
+<!-- 소설 -->
+    <insert id="insertNovelInfo" parameterType="com.novel.service.data.temp.NovelReg" useGeneratedKeys="true" keyProperty="no_seq">
+        INSERT INTO novel_info
+        (no_img_seq, no_gen_seq,no_wi_seq, no_name, no_simple_txt, no_seday, no_age_status)
+        VALUES (#{no_img_seq}, #{no_gen_seq},#{no_wi_seq}, #{no_name}, #{no_simple_txt}, #{no_seday}, #{no_age_status});
+
+    </insert>
+
+    <insert id="insertNovelImg" parameterType="com.novel.service.data.NovelInfoVO" useGeneratedKeys="true" keyProperty="no_img_seq">
+        insert into image_data (img_name)
+        values (#{novel_img})
+    </insert>
+
+
+<!-- 작가 -->
+    <select id="selectWriterInfo" resultType="com.novel.service.data.GenreInfoVO">
+        select * from writer_info where wi_no_seq = #{seq}
+    </select>
+
+    <insert id="insertWriterInfo" parameterType="com.novel.service.data.WriterInfoVO" useGeneratedKeys="true" keyProperty="wi_seq">
+        insert into writer_info (wi_no_seq, wi_user_seq)
+        values (#{wi_no_seq},#{wi_user_seq})
+    </insert>
+
+
+    <update id="updateNovelInfoWriterSeq">
+        update novel_info set no_wi_seq = #{seq}
+    </update>
+
+</mapper>

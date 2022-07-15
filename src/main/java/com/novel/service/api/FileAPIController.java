@@ -31,13 +31,14 @@ public class FileAPIController {
     @GetMapping("images/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename, HttpServletRequest request) throws Exception
     {
-        Path folderLocation = Paths.get(path+"/") ;
+        Path folderLocation = Paths.get(path+"/images") ;
         Path filePath = folderLocation.resolve(filename) ;
         Resource r = null;
 
         try {
             r = new UrlResource(filePath.toUri()) ;
         } catch (Exception e) { System.out.println("파일을 찾을 수 없거나, 잘못된 파일 경로입니다.");
+        return null ;
         }
         
         //파일의 실제 경로에 찾아가서 파일의 유형을 가져옴
@@ -48,6 +49,7 @@ public class FileAPIController {
             contentType = "application/octet-stream" ;
         } catch (Exception e) {
             System.out.println("파일을 찾을 수 없거나, 잘못된 파일 경로입니다.");
+            return null ;
         }
 
 
@@ -61,7 +63,7 @@ public class FileAPIController {
         .body(r) ;
     } 
 
-    @PutMapping("/image/upload/profile")
+    @PutMapping("/image/upload")
     public Map<String,Object> putImageUpload(@RequestPart MultipartFile file )
     {
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>() ;
@@ -80,7 +82,7 @@ public class FileAPIController {
 
         Calendar c = Calendar.getInstance() ;
 
-        String saveFileName = StringUtils.cleanPath("account_profile_" + c.getTimeInMillis() + "." +ext) ;
+        String saveFileName = StringUtils.cleanPath("img_" + c.getTimeInMillis() + "." +ext) ;
         Path target =forderLocaion.resolve(saveFileName) ;
         try {
             Files.copy(file.getInputStream(),target,StandardCopyOption.REPLACE_EXISTING);
@@ -104,7 +106,7 @@ public class FileAPIController {
     public  Map<String,Object> deleteImageFile(@PathVariable String filename)
     {
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>() ;
-        String filepath = path+"/account_profile/"+filename ;
+        String filepath = path+"/images/"+filename ;
         File deleteFile = new File(filepath) ;
         if (deleteFile.exists())
         {

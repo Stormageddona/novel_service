@@ -1,4 +1,4 @@
-package com.novel.service.controller.user;
+package com.novel.service.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
