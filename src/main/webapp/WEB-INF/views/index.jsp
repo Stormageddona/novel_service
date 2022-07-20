@@ -13,7 +13,7 @@
 </head>
 <body>
     <main>
-        <section class="main">
+        <section class="i_main">
             <section class="poster">
                 <div class="best_box">
 

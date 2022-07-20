@@ -74,15 +74,31 @@ public class UserAPIController {
     public Map<String,Object> findUser(@RequestParam String value1, @RequestParam String value2,@RequestParam Integer type) throws Exception
     {
         Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+        String temp = null ;
         if (type == 1) 
         {
+            temp = u_mapper.selectFindId(value1, value2) ;
+            if (temp == null) 
+            {
+                map.put("status",false) ;
+                map.put("message","아이디 찾기에 실패하였습니다.") ;
+                return map ;
+            }
             map.put("status",true) ;
             map.put("id",u_mapper.selectFindId(value1, value2)) ;
         }
         else if (type == 2) 
         {
             map.put("status",true) ;
-            map.put("seq",AESAlgorithm.Encrypt(u_mapper.selectFindPwd(value2, value1))) ;
+            temp = u_mapper.selectFindPwd(value2, value1) ;
+            if (temp == null) 
+            {
+                map.put("status",false) ;
+                map.put("message","비밀번호 찾기에 실패하였습니다.") ;
+                return map ;
+            }
+            map.put("status",true) ;
+            map.put("seq",AESAlgorithm.Encrypt(temp)) ;
         }
 
         return map ;

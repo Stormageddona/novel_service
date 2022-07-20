@@ -28,8 +28,8 @@
         <div class="title">
 
         </div>
-        <a href="/novel/free">무료 웹소설</a>
-        <a href="/novel/platinum">유료 웹소설</a>
+        <a href="/category/free">무료 웹소설</a>
+        <a href="/category/premium">유료 웹소설</a>
         <a href="/novel/show">공모전</a>
         <a href="/novel/ebook">EBook</a>
         <a href="/novel/show">베스트</a>

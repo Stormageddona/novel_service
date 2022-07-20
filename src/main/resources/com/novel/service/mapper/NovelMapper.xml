@@ -21,6 +21,60 @@
         values (#{novel_img})
     </insert>
 
+    <select id="selectNovelList" resultType="com.novel.service.data.temp.MyNovelList">
+        select a.no_seq, a.no_name,a.no_status, a.no_serial_type ,a.no_age_status , a.no_reg_dt , b.img_name ,c.gen_name, d.wi_user_seq from novel_info a 
+        left outer join image_data b on a.no_img_seq = b.img_seq 
+        left outer join genre_info c on a.no_gen_seq = c.gen_seq
+        inner join writer_info d on a.no_wi_seq = d.wi_seq 
+        where d.wi_user_seq = #{seq} order by a.no_seq desc
+        limit 7 offset #{offset}
+    </select>
+
+    <select id="selectNovelPagerCount" resultType="java.lang.Integer">
+        select ceil(count(wi_user_seq)/7) from writer_info where wi_user_seq = #{seq}
+    </select>
+
+    <select id="selectNovelInfoBySeq" resultType="com.novel.service.data.NovelInfoVO">
+        select a.*, b.img_name, c.gen_name, d.wi_name from novel_info a left outer join image_data b on a.no_img_seq = b.img_seq left outer join genre_info c on a.no_gen_seq = c.gen_seq inner join writer_info d on a.no_seq = d.wi_no_seq  where no_seq = #{seq}
+    </select>
+
+    <select id="selectNovelFavoriteUser" resultType="java.lang.Boolean">
+        select count(*) from novel_favorites where nf_no_seq = #{seq} and nf_user_seq = #{user}
+    </select>
+
+    <select id="selectNovelFavoritesCount" resultType="java.lang.Integer">
+        select count(*) from novel_favorites where nf_no_seq = #{seq}
+    </select>
+
+    <select id="selectNovelStoryList" resultType="com.novel.service.data.NovelStoryVO">
+        select * from novel_story 
+        where ns_no_seq = #{seq} order by ns_index desc 
+    </select>
+
+    <select id="selectNovelLikeCount" resultType="java.lang.Integer">
+        select count(*) from novel_like_info where nli_ns_seq = #{seq}
+    </select>
+
+    <insert id="insertNovelStory">
+        insert into novel_story(ns_no_seq, ns_name, ns_file_name, ns_index, ns_writer_comment)
+        values (#{seq}, #{data.ns_name}, #{data.ns_file_name}, #{data.ns_index}, #{data.ns_writer_comment})
+    </insert>
+
+    <select id="selectStoryCount" resultType="java.lang.Integer">
+        select count(*) from novel_story where ns_no_seq = #{seq}
+    </select>
+    <select id="selectStoryInfoBySeq" resultType="com.novel.service.data.temp.StoryInfoData">
+    select (select count(ns_seq) from novel_story where ns_no_seq = #{seq}) as storycount, 
+    (select count(nf_seq) from novel_favorites where nf_no_seq = #{seq}) as favoritecount,
+    (select sum(ns_count) from novel_story where ns_no_seq = #{seq}) as totalcount,
+    (select ns_reg_dt from novel_story where ns_no_seq = #{seq} order by ns_reg_dt desc limit 1 ) as last_dt
+    </select>
+
+    <select id="selectCategoryNovelList" resultType ="com.novel.service.data.NovelInfoVO">
+        select a.*, b.wi_name from novel_info a 
+        inner join writer_info b on a.no_seq = b.wi_no_seq 
+        where no_serial_type = #{type}
+    </select>
 
 <!-- 작가 -->
     <select id="selectWriterInfo" resultType="com.novel.service.data.GenreInfoVO">
@@ -28,8 +82,8 @@
     </select>
 
     <insert id="insertWriterInfo" parameterType="com.novel.service.data.WriterInfoVO" useGeneratedKeys="true" keyProperty="wi_seq">
-        insert into writer_info (wi_no_seq, wi_user_seq)
-        values (#{wi_no_seq},#{wi_user_seq})
+        insert into writer_info (wi_no_seq, wi_user_seq, wi_name)
+        values (#{wi_no_seq},#{wi_user_seq},#{wi_name})
     </insert>
 
 

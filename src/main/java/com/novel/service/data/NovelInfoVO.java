@@ -19,6 +19,8 @@ public class NovelInfoVO {
     private Integer no_age_status;
     private Date no_reg_dt;
 
-    private String novel_img ;
+    private String img_name ;
+    private String gen_name ;
+    private String wi_name ;
 
 }

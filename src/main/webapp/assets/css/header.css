@@ -3,6 +3,8 @@ header{width: 1000px;height: 150px;border: 1px solid #000;z-index: 9999;position
 header .title {height: 100px;border: 1px solid #000;}
 header > a {margin: 0 30px;}
 
-main {margin: 0 auto; width: 1000px;}
-.main {display: inline-block;border: 1px solid #000;position: relative;height: 1500px;width: 796px;padding: 0;}
+main {margin: 0 auto; width: 1000px;position: relative;z-index: -9999;}
+.i_main {display: inline-block;border: 1px solid #000;position: relative;height: 1500px;width: 797px;padding: 0;}
+
+
 

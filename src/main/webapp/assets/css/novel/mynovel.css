@@ -1,0 +1,8 @@
+.novel_list {border: 1px solid #000;table-layout: fixed;}
+.novel_list .tr_end_box {border-bottom: 1px solid #000;}
+.novel_list {width: 795px;height: 30px;line-height: 20px; }
+.novel_list td {height: 30px;line-height: 20px;}
+.img_box {width: 100%;height: 100%;}
+.list_name {width: 150px;}
+.list_age {width: 70px;}
+.list_date {vertical-align: top;}

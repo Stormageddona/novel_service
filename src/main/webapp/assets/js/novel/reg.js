@@ -38,7 +38,7 @@ $(function()
             success:function(result)
             {
                 alert(result.message)
-                location.href="redirect:/"
+                location.href="/novel/mynovel"
             }
         })
     })

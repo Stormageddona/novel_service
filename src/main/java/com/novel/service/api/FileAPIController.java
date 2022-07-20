@@ -1,6 +1,9 @@
 package com.novel.service.api;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,14 +20,19 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.novel.service.data.temp.TextDetail;
+
 @RestController
 public class FileAPIController {
     @Value("${spring.servlet.multipart.location}") String path;
@@ -101,6 +109,40 @@ public class FileAPIController {
 
         return resultMap ;
     }
+
+
+    @PutMapping("/text/upload")
+    @Transactional
+    public  Map<String,Object> putTextFile(@RequestBody TextDetail data) throws IOException
+    {
+        Map<String,Object> map = new LinkedHashMap<String,Object>() ;
+        Path forderLocaion = Paths.get(path+"/text") ;
+        Calendar c = Calendar.getInstance() ;
+        String saveFileName = StringUtils.cleanPath("text_" + c.getTimeInMillis() + ".txt") ;
+        File file = new File(forderLocaion+"/"+saveFileName) ;
+        BufferedWriter bw = new BufferedWriter(
+            new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
+                ))  ;
+                
+        bw.write(data.getDetail());
+        bw.close();
+        map.put("file",saveFileName) ;
+        if (data.getComment().length() > 0)
+        {
+            saveFileName = StringUtils.cleanPath("comment_" + c.getTimeInMillis() + ".txt") ;
+            file = new File(forderLocaion+"/"+saveFileName) ;
+            bw = new BufferedWriter(
+                new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
+                    ))  ;
+            bw.write(data.getDetail());
+            bw.close();
+            map.put("comment",saveFileName) ;
+        }
+        map.put("status", true) ;
+        map.put("message", "파일 업로드 완료") ;
+        return map ;
+    }
+
 
     @DeleteMapping("/image/delete/{filename}")
     public  Map<String,Object> deleteImageFile(@PathVariable String filename)

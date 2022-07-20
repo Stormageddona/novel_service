@@ -1,7 +1,7 @@
 
 .poster {border: 1px solid #000;width: 100%;height: 500px;}
 
-.poster .banner {width: 573px;height: 297px;border: 1px solid #000;}
-.poster .week {border: 1px solid #000;width: 573px;height: 200px;}
-.poster .best_box {width: 220px;height: 100%;border: 1px solid #000;top: 0;float:inline-end}
-.main .todaybest {width: 100%;height: 400px;border: 1px solid #000;}
+.poster .banner {width: 573px;height: 297px;border: 1px solid #000;margin: 0;}
+.poster .week {border: 1px solid #000;width: 573px;height: 200px;margin: 0;}
+.poster .best_box {width: 220px;height: 100%;border: 1px solid #000;top: 0;float:right;margin: 0;}
+.i_main .todaybest {width: 100%;height: 400px;border: 1px solid #000;}

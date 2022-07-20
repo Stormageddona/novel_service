@@ -15,7 +15,7 @@
         <h1>소설 등록</h1>
         <table>
             <tr>
-                <td>제목</td>
+                <td>제목</td><style></style>
                 <td><input type="text" id="novel_name"></td>
             </tr>
             <tr>

@@ -23,12 +23,16 @@ $(function()
         if (!confirm("아이디를 찾으시겠습니까?")) return ;
         $.ajax
         ({
-            url:"api/user/find?value1="+$("#find_id_email").val()+"&value2="+$("#find_id_nickname").val()+"&type=1",
+            url:"/api/user/find?value1="+$("#find_id_email").val()+"&value2="+$("#find_id_nickname").val()+"&type=1",
             type:"get",
             success:function(result)
             {
-                alert(result.message)
-                location.href="/"
+                if (result.status) 
+                {
+                    alert("아이디 찾기 성공. 고객님의 아이디는 "+result.id+" 입니다.")
+                    location.href="/"
+                }
+                else alert(result.message)
             }
         })
     })
@@ -43,7 +47,9 @@ $(function()
             type:"get",
             success:function(result)
             {
-                location.href="/user/value/pwd/"+result.seq
+
+                if (result.status) location.href="/user/value/pwd/"+result.seq ;
+                else alert(result.message)
             }
         })
     })

@@ -36,7 +36,7 @@ $(function()
     {
         $.ajax
         ({
-            url:"api/user/logout", type:"get",
+            url:"/api/user/logout", type:"get",
             success:function()
             {
                 location.href="/"
@@ -49,5 +49,10 @@ $(function()
     $("#write").click(function()
     {
         location.href="/novel/reg"
+    })
+
+    $("#my_novel").click(function()
+    {
+        location.href="/novel/mynovel"
     })
 })
