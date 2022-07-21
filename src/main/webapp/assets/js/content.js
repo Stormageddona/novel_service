@@ -10,6 +10,7 @@ $(function()
             for(let i = 0 ; i < result.list.length ; i++)
             {   
                 console.log(result.list[i].no_name)
+                
                 let tag =
                     '<tr>' +
                         '<td><a href="/novel/storylist?seq='+result.list[i].no_seq+'">' + result.list[i].no_name + '</a></td>' +

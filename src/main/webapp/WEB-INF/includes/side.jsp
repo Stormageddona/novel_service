@@ -14,7 +14,7 @@
         <div class="login_box">
             <c:if test="${user == null}">    
                 <input type="text" id="id_input" placeholder="아이디">
-                <input type="password" id="pwd_input" placeholder="비밀번호">
+                <input type="password" id="pwd_input" placeholder="비밀번호" class="password">
                 <button id="login">로그인</button>
                 <button id="join">회원가입</button>
                 <button id="find">아이디/비밀번호 찾기</button>

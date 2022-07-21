@@ -19,7 +19,7 @@ $(function()
 
     $("#input_pwd_confirm, #input_pwd ").keyup(function()
     {
-        if ($("#input_pwd").val() == $("#input_pwd_confirm").val())
+        if ($("#input_pwd").val() == $("#input_pwd_confirm").val() && !isEmpty($("#input_pwd").val()))
         {
             condition = true ;
             $("#msg_pwd_confirm").html("비밀번호가 확인되었습니다.") ;
@@ -64,11 +64,11 @@ $(function()
             $("#err_msg_name").html("이름엔 공백이 들어갈수 없습니다.") ;
             filter = false ;
         }
-        if (isEmpty($("#input_nickname").val()))
-        {
-            $("#err_msg_nickname").html("닉네임엔 공백이 들어갈수 없습니다.") ;
-            filter = false ;
-        }
+        // if (isEmpty($("#input_nickname").val()))
+        // {
+        //     $("#err_msg_nickname").html("닉네임엔 공백이 들어갈수 없습니다.") ;
+        //     filter = false ;
+        // }
         if (isEmpty($("#input_email").val()))
         {
             $("#err_msg_email").html("이메일엔 공백이 들어갈수 없습니다.") ;

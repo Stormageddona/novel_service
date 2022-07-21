@@ -1,5 +1,11 @@
 package com.novel.service.api;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +13,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +37,7 @@ import com.novel.service.mapper.UserMapper;
 public class NovelAPIController {
     @Autowired NovelMapper n_mapper ;
     @Autowired UserMapper u_mapper ;
+    @Value("${spring.servlet.multipart.location}") String path;
 
     @PutMapping("/reg")
     @Transactional
@@ -38,11 +47,11 @@ public class NovelAPIController {
         UserInfoVO user = (UserInfoVO) session.getAttribute("user") ;
         if (data.getNovel_img() != null) n_mapper.insertNovelImg(data);    
         else data.setNo_img_seq(0);
-
+        String temp = user.getUser_nickname().equals("")||user.getUser_nickname()==null?user.getUser_name():user.getUser_nickname() ;
         n_mapper.insertNovelInfo(data);
-        WriterInfoVO writer = new WriterInfoVO(data.getNo_seq(),user.getUser_seq(), user.getUser_nickname()) ;
+        WriterInfoVO writer = new WriterInfoVO(data.getNo_seq(),user.getUser_seq(), temp) ;
         n_mapper.insertWriterInfo(writer);
-        n_mapper.updateNovelInfoWriterSeq(writer.getWi_seq());
+        n_mapper.updateNovelInfoWriterSeq(writer.getWi_seq(), data.getNo_seq());
         if (user.getUser_grade() == 1) u_mapper.updateUserInfoGrade(user.getUser_seq(),2);
         
         map.put("status", true) ;
@@ -73,20 +82,29 @@ public class NovelAPIController {
     public  Map<String,Object> getStoryInfo(HttpSession session, @RequestParam Integer seq)
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>() ;
-        map.put("data",n_mapper.selectStoryInfoBySeq(seq)) ;
+        map.put("data",n_mapper.selectStoryCountBySeq(seq)) ;
 
         return map ;
     }
 
 
     @GetMapping("/storylist")
-    public  Map<String,Object> getStoryList(@RequestParam Integer seq, @RequestParam @Nullable Integer offset)
+    public  Map<String,Object> getStoryList(@RequestParam Integer seq, @RequestParam @Nullable Integer offset)  
     {
+        System.out.println(seq);
         Map<String,Object> map = new LinkedHashMap<String,Object>() ;
-        List<NovelStoryVO> list = n_mapper.selectNovelStoryList(seq) ;
+        List<NovelStoryVO> list = null;
+        try {
+            list = n_mapper.selectNovelStoryList(seq) ;
+            
+        } catch (Exception e) {
+            map.put("list",null) ;
+        }
+        
         for (NovelStoryVO s : list)
         {
             s.setLike_count(n_mapper.selectNovelFavoritesCount(s.getNs_seq()));
+            s.setNs_count(n_mapper.selectNovelCountData(s.getNs_seq()));
         }
         map.put("list",list) ;
         return map ;
@@ -102,4 +120,55 @@ public class NovelAPIController {
 
         return map ;
     }
+    @GetMapping("/story/part")
+    public  Map<String,Object> getStoryPart(@RequestParam Integer seq, HttpSession session) throws IOException
+    {
+        UserInfoVO user = (UserInfoVO)session.getAttribute("user") ;
+        NovelStoryVO data = n_mapper.selectStoryPart(seq) ;
+        Map<String,Object> map = new LinkedHashMap<String,Object>() ;
+        map.put("title", data.getNs_name()) ;
+
+        BufferedReader br = new BufferedReader(
+            new FileReader(new File(path+"/text/"+data.getNs_file_name()) 
+        ))  ;
+        String s = "";
+        String content = "";
+        while(s != null) 
+        {
+            content += s + "<br>";
+            s = br.readLine();
+        }
+        br.close();
+        map.put("content", content) ;
+
+        
+        if (user != null  )
+        {
+            Boolean temp = n_mapper.isNovelCountTime(user.getUser_seq()) ;
+            if (temp == null) temp = true ;
+            if (temp)
+                n_mapper.insertNovelCountData(user.getUser_seq(), data.getNs_no_seq(),seq) ;
+        }
+        br = null ;
+        try {
+            br = new BufferedReader(
+                new FileReader(new File(path+"/text/"+data.getNs_writer_comment()) 
+            ))  ;
+            s = "";
+            content = "";
+            while(s != null) 
+            {
+                content += s + "<br>";
+                s = br.readLine();
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            map.put("comment", "-") ;
+            return map ;
+        }
+
+        map.put("comment", content) ;
+        return map ;
+    }
+
 }

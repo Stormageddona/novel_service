@@ -14,7 +14,8 @@ public class NovelStoryVO {
     private String ns_writer_comment;
     private Date ns_reg_dt;
     private Date ns_mod_dt;
-    private Integer ns_count ;
     
+    
+    private Integer ns_count ;
     private Integer like_count ;
 }

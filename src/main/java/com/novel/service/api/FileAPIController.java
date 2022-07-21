@@ -36,10 +36,10 @@ import com.novel.service.data.temp.TextDetail;
 @RestController
 public class FileAPIController {
     @Value("${spring.servlet.multipart.location}") String path;
-    @GetMapping("images/{filename}")
-    public ResponseEntity<Resource> getImage(@PathVariable String filename, HttpServletRequest request) throws Exception
+    @GetMapping("{type}/{filename}")
+    public ResponseEntity<Resource> getImage(@PathVariable String type,@PathVariable String filename, HttpServletRequest request) throws Exception
     {
-        Path folderLocation = Paths.get(path+"/images") ;
+        Path folderLocation = Paths.get(path+"/"+type) ;
         Path filePath = folderLocation.resolve(filename) ;
         Resource r = null;
 
@@ -134,7 +134,7 @@ public class FileAPIController {
             bw = new BufferedWriter(
                 new FileWriter(file,false   // true : 이어쓰기, false : 덮어쓰기
                     ))  ;
-            bw.write(data.getDetail());
+            bw.write(data.getComment());
             bw.close();
             map.put("comment",saveFileName) ;
         }

@@ -1,5 +1,6 @@
 package com.novel.service.mapper;
 
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -28,11 +29,19 @@ public interface NovelMapper {
     public List<NovelStoryVO> selectNovelStoryList(Integer seq) ;
     public void insertNovelStory(Integer seq, TextDetail data) ;
     public Integer selectNovelLikeCount(Integer seq) ;
+    public NovelStoryVO selectStoryPart(Integer seq) ;
+    
 
     public Integer selectStoryCount(Integer seq);
-    public StoryInfoData selectStoryInfoBySeq(Integer seq) ;
+    public StoryInfoData selectStoryCountBySeq(Integer seq) ;
 
     public List<NovelInfoVO> selectCategoryNovelList(Integer type) ;
+
+    public void insertNovelCountData(Integer seq,Integer no_seq , Integer ns_seq) ;
+    
+    //조회수
+    public Boolean isNovelCountTime(Integer user_seq) ;
+    public Integer selectNovelCountData(Integer ns_seq) ;
 
     //장르 
     public List<GenreInfoVO> selectGenreList() ;
@@ -45,5 +54,5 @@ public interface NovelMapper {
     // 작가
     public WriterInfoVO selectWriterInfo(Integer seq) ;
     public void insertWriterInfo(WriterInfoVO data) ;
-    public void updateNovelInfoWriterSeq(Integer seq) ;
+    public void updateNovelInfoWriterSeq(Integer seq, Integer no_seq) ;
 }

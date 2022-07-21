@@ -10,6 +10,11 @@ $(function()
         location.href="/user/find"
     })
 
+    $("#pwd_input").keydown(function(e) {
+        if(e.keyCode == 13) {
+            $("#login").trigger("click");
+        }
+    })
     $("#login").click(function()
     {
         let id = $("#id_input").val()

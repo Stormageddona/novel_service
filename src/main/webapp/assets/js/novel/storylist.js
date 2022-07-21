@@ -18,6 +18,7 @@ $(function()
                         '<td class="table_like">'+result.list[i].like_count+'</td>' +
                     '<tr>' ;
                 $(".story_list_box tbody").append(tag) ;
+                localStorage.setItem(result.list[i].ns_seq,result.list[i].ns_seq)
             }
             
         }

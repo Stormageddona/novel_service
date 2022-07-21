@@ -60,13 +60,19 @@
         values (#{seq}, #{data.ns_name}, #{data.ns_file_name}, #{data.ns_index}, #{data.ns_writer_comment})
     </insert>
 
+
+    <select id="selectStoryPart" resultType="com.novel.service.data.NovelStoryVO">
+        select * from novel_story where ns_seq = #{seq}
+    </select>
+
+
     <select id="selectStoryCount" resultType="java.lang.Integer">
         select count(*) from novel_story where ns_no_seq = #{seq}
     </select>
-    <select id="selectStoryInfoBySeq" resultType="com.novel.service.data.temp.StoryInfoData">
+    <select id="selectStoryCountBySeq" resultType="com.novel.service.data.temp.StoryInfoData">
     select (select count(ns_seq) from novel_story where ns_no_seq = #{seq}) as storycount, 
     (select count(nf_seq) from novel_favorites where nf_no_seq = #{seq}) as favoritecount,
-    (select sum(ns_count) from novel_story where ns_no_seq = #{seq}) as totalcount,
+    (select count(*) from novel_story where ncd_no_seq = #{seq}) as totalcount,
     (select ns_reg_dt from novel_story where ns_no_seq = #{seq} order by ns_reg_dt desc limit 1 ) as last_dt
     </select>
 
@@ -74,6 +80,21 @@
         select a.*, b.wi_name from novel_info a 
         inner join writer_info b on a.no_seq = b.wi_no_seq 
         where no_serial_type = #{type}
+    </select>
+
+    <update id ="insertNovelCountData">
+        INSERT INTO novel_count_data
+        (ncd_user_seq,ncd_no_seq, ncd_ns_seq)
+        VALUES(#{seq},#{no_seq}, #{ns_seq});
+    </update>
+
+    <select id="isNovelCountTime" resultType ="java.lang.Boolean">
+        select ( <![CDATA[UNIX_TIMESTAMP() > UNIX_TIMESTAMP(ncd_count_time)+3600]]> ) from novel_count_data 
+        where ncd_user_seq = #{user_seq} order by ncd_count_time desc limit 1
+    </select>
+
+    <select id="selectNovelCountData" resultType ="java.lang.Integer">
+        select count(*) from novel_count_data where ncd_ns_seq = #{ns_seq}
     </select>
 
 <!-- 작가 -->
@@ -88,7 +109,8 @@
 
 
     <update id="updateNovelInfoWriterSeq">
-        update novel_info set no_wi_seq = #{seq}
+        update novel_info set no_wi_seq = #{seq} where no_seq = #{no_seq}
     </update>
+
 
 </mapper>

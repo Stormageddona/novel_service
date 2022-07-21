@@ -56,7 +56,7 @@ public class NovelController {
     @GetMapping("/story/content/{part}")
     public String getStoryPart(HttpSession session,Model model, @PathVariable Integer part)
     {
-        
-        return "" ;
+        model.addAttribute("ns_seq", part) ;
+        return "/novel/part" ;
     }
 }
