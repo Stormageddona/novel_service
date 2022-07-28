@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <main>
+    <div class="main_content_area">
         <h1>소설 등록</h1>
         <table>
             <tr>
@@ -31,7 +31,7 @@
             <tr>
                 <td>표지</td>
                 <form class="novel_img_form" hidden>
-                    <td><input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png"></td>
+                    <input type="file" id="input_image" name="file" accept="image/gif,image/jpeg,image/png">
                 </form>
                 <div class="novel_image"></div>
             </tr>
@@ -63,6 +63,6 @@
         </table>
         <button id="novel_reg_submit">소설 등록하기</button>
         <button id="novel_reg_cancel">취소하기</button>
-    </main>
+    </div>
 </body>
 </html>

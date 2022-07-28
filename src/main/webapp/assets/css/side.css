@@ -1,4 +1,11 @@
-.side {width: 199px;height: 1200px;border: 1px solid #000;margin: 0 auto;;float: right;}
-.side .login_box {width: 240;height: 80px;top: 0;padding: 15px;
-    border: 1px solid #000;}
+.side {width: 199px;height: 1200px;margin: 0 auto;;float: right;}
+.side .login_box {width: 184px;padding-left: 15px; padding-top: 20px; height: 100px;top: 0; background-color: rgba(128, 128, 128, 0.13);}
 #user_logout {float: right;}
+
+.input_login {display: inline-block;width: 105px;padding: 0;height: 65px;}
+#id_input ,#pwd_input { width: 105px;border: none;height: 23px;border: 1px solid rgba(128, 128, 128, 0.62);}
+
+#login {width: 55px;height: 52px;border: none;background-color:rgb(37, 120, 230);vertical-align: top;color: #fff;cursor: pointer;}
+
+#join {width: 57px; font-size: 10px;display: inline-block;padding: 0;background-color: #fff;color: rgba(128, 128, 128, 0.62); border: 1px solid rgba(128, 128, 128, 0.77);height: 18px;}
+#find {width: 110px;font-size: 10px;padding: 0;background-color: #fff;color: rgba(128, 128, 128, 0.62); border: 1px solid rgba(128, 128, 128, 0.77);height: 18px;}

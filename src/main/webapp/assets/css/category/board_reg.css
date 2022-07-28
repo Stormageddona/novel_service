@@ -1,0 +1,16 @@
+
+
+.text_area {width: 90%;height: 500px;margin: 0 auto;margin-top: 50px;}
+.text_area select {width: 20%;height: 30px;}
+.text_area input {width: 70%;height: 30px;font-size: 18px;}
+.text_area #add_image {width: 30px;height: 30px;}
+.text_area textarea {width: 100%;height: 100%;resize: none;font-size: 18px;}
+
+.img_area { width: 100%; border: 1px solid rgba(14, 39, 202, 0.264);min-height:30px ;border-radius: 10px;margin-top: 15px;}
+
+#reg_btn {position: relative;margin-left: 210px;margin-top: 30px; display: inline-block;width: 60px;height: 40px;}
+#cancel_btn {position: absolute;margin-left: 20px;margin-top: 30px ;display: inline-block;width: 60px;height: 40px;}
+
+.board_img {width: 100px;height: 100px;background-repeat: no-repeat;background-size: 100%;border: 1px solid #000;display: inline-block;margin-left: 12px;margin-top: 3px;}
+
+.board_img button {position: absolute;margin-left: 75px;}

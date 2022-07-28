@@ -6,6 +6,7 @@ $(function()
         url:"/api/novel/list",type:"get",
         success:function(result)
         {
+            console.log(result)
             if (result.status == false) return ;
             console.log(result.message);
             $(".novel_list tbody").html("") ;
@@ -39,7 +40,7 @@ $(function()
                             '<td>'+ status +'</td>'+
                             '<td>'+ type +'</td>'+
                             '<td class="list_age">'+ age +'</td>'+
-                            '<td><button class="story_reg_btn" data-seq="'+ result.list[i].no_seq +'">신규 회차 등록</button></td>'+
+                            '<td><button class="style_button story_reg_btn" data-seq="'+ result.list[i].no_seq +'">신규 회차 등록</button></td>'+
                         '</tr>'+
                         '<tr class="tr_end_box">'+
                             '<td>찜 : '+ (r.data.favoritecount==null?0:r.data.favoritecount)  +'</td>'+
@@ -48,7 +49,7 @@ $(function()
                             '<td class="list_date">최근 연재일<br> '+last_dt+'</td>'+
                             '<td>연재화수 : '+ (r.data.storycount==null?0:r.data.storycount) +'</td>'+
                             '<td></td>'+
-                            '<td><button class="modify_btn" data-seq="'+ result.list[i].no_seq +'">소설 정보 수정</button></td>' +
+                            '<td><button class="style_button modify_btn" data-seq="'+ result.list[i].no_seq +'">소설 정보 수정</button></td>' +
                         '</tr>';
                         
                         $(".novel_list tbody").append(tag) ;

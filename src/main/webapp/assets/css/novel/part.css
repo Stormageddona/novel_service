@@ -1,1 +1,13 @@
-.text_area {border: 1px solid #000;width: 600px;display: inline-block;vertical-align: top;background-color: rgb(186, 232, 184); font-weight: 400;line-height: 40px; font-size: 18px;letter-spacing: 1px;}
+.text_area {border: 1px solid #000;width: 650px;display: inline-block;vertical-align: top;background-color: rgb(186, 232, 184); font-weight: 400;line-height: 40px; font-size: 18px;letter-spacing: 1px;}
+.info_area {display: inline-block;width: 650px;height: 200px;;vertical-align: top;border: 1px solid #000;background-color: #fff;}
+.title_area p ,.comment_area p {font-size: 30px;font-weight: 700;line-height: 75px;margin-top: 30px; margin-bottom: 50px;}
+.text_content_area {margin-bottom: 200px;padding: 0 30px;}
+.comment_area {border: 1px solid #888686; border-radius: 15px;padding:30px;margin: 40px;margin-bottom: 100px;}
+.user_area {padding-bottom: 300px; border: 1px solid #000;}
+
+.user_comment_box {width: 630px;height: auto;border: 1px solid #000;margin: 20px 5px;display: flex;align-items: center;}
+.user_info_box {width: 100px;display: inline-block;border: 1px solid #000;padding: 5px;}
+.user_info_box > .user_name {font-size: 16px;text-align: center;}
+.user_info_box > .user_comment_dt {font-size: 12px;}
+.user_info_box > .user_comment_number {font-size: 12px;}
+.user_content {width: 520px;height: auto; display: inline-block;border: 1px solid #000;word-break: break-all;padding-left: 20px;}

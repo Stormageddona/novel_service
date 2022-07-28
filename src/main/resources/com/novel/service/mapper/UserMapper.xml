@@ -39,4 +39,27 @@
         select count(*) from user_info where user_nickname = #{nickname}
     </select> 
 
+    <insert id="insertUserComment">
+        INSERT INTO comment_info
+        (cmti_user_seq, cmti_text
+        <if test="type == 1">
+        ,cmti_ns_seq
+        </if>
+        <if test="type == 2">
+        ,cmti_cbi_seq
+        </if>
+        )
+        VALUES(#{user_seq},#{text},#{seq});
+    </insert>
+
+    <select id="selectCommentList" resultType="com.novel.service.data.CommentInfoVO">
+        select a.*, b.user_nickname from comment_info a inner join user_info b on a.cmti_user_seq = b.user_seq where 
+        <if test="type == 1">
+        a.cmti_ns_seq = #{seq}
+        </if>
+        <if test="type == 2">
+        a.cmti_cbi_seq = #{seq}
+        </if>
+        order by a.cmti_reg_dt asc
+    </select>
 </mapper>

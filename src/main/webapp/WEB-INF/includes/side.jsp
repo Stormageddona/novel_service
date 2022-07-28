@@ -7,15 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/assets/js/side.js"></script>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+
     <link rel="stylesheet" href="/assets/css/side.css">
 </head>
 <body>
     <aside class="side">
         <div class="login_box">
             <c:if test="${user == null}">    
-                <input type="text" id="id_input" placeholder="아이디">
-                <input type="password" id="pwd_input" placeholder="비밀번호" class="password">
-                <button id="login">로그인</button>
+                <!-- 아래와같이 아이디를 꼭 써준다. -->
+                <!-- <a id="naverIdLogin_loginButton" href="javascript:void(0)">
+                    <span>네이버 로그인</span>
+                </a> -->
+                <div class="input_login">                    
+                    <input type="text" id="id_input" placeholder="아이디">
+                    <input type="password" id="pwd_input" placeholder="비밀번호" class="password">
+                </div>
+                <button id="login">로그인</button>   
                 <button id="join">회원가입</button>
                 <button id="find">아이디/비밀번호 찾기</button>
             </c:if>

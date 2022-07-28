@@ -69,6 +69,7 @@ public class NovelAPIController {
         if (user == null) 
         {
             map.put("status", false) ;
+            map.put("message", "로그인 해주세요.") ;
             return map ;
         }
         map.put("message", "목록이 조회되었습니다.") ;
@@ -91,7 +92,6 @@ public class NovelAPIController {
     @GetMapping("/storylist")
     public  Map<String,Object> getStoryList(@RequestParam Integer seq, @RequestParam @Nullable Integer offset)  
     {
-        System.out.println(seq);
         Map<String,Object> map = new LinkedHashMap<String,Object>() ;
         List<NovelStoryVO> list = null;
         try {
@@ -118,10 +118,14 @@ public class NovelAPIController {
 
         n_mapper.insertNovelStory(seq,detail) ;
 
+        map.put("status",true) ;
+        map.put("message","소설이 등록 되었습니다.") ;
+
+
         return map ;
     }
     @GetMapping("/story/part")
-    public  Map<String,Object> getStoryPart(@RequestParam Integer seq, HttpSession session) throws IOException
+    public  Map<String,Object> getStoryPart(@RequestParam Integer seq, HttpSession session) throws Exception
     {
         UserInfoVO user = (UserInfoVO)session.getAttribute("user") ;
         NovelStoryVO data = n_mapper.selectStoryPart(seq) ;
@@ -144,7 +148,7 @@ public class NovelAPIController {
         
         if (user != null  )
         {
-            Boolean temp = n_mapper.isNovelCountTime(user.getUser_seq()) ;
+            Boolean temp = n_mapper.isNovelCountTime(user.getUser_seq(), data.getNs_seq()) ;
             if (temp == null) temp = true ;
             if (temp)
                 n_mapper.insertNovelCountData(user.getUser_seq(), data.getNs_no_seq(),seq) ;
@@ -170,5 +174,9 @@ public class NovelAPIController {
         map.put("comment", content) ;
         return map ;
     }
+
+    
+
+    
 
 }

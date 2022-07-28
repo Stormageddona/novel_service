@@ -14,8 +14,8 @@
 
             </div>
             <div class="search_box">
-                <input type="text" style="width: 120px;">
-                <button>검색</button>
+                <input type="text" id="search_input_content" style="width: 120px;">
+                <button class="search_btn" id="search_btn_content" data-seq="2">검색</button>
             </div>
             <div class="page_box">
 

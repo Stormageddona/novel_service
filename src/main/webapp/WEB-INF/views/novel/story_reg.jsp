@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <main>
+    <div class="main_content_area">
         <div class="text_area">
             <input type="text" id="story_name" placeholder="제목을 입력하세요"><br>
             <textarea id="story_detail" style="width: 592px;height: 600px;resize: none;"></textarea><br>
@@ -23,6 +23,6 @@
             <button id="reg_text_btn" data-seq="${seq}">등록</button>
             <button id="cancel_text_btn">취소</button>
         </div>
-    </main>
+    </div>
 </body>
 </html>

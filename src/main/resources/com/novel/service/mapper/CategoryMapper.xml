@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.service.mapper.CategoryMapper">    
+    <select id="selectCategoryList" resultType="com.novel.service.data.CategoryInfoVO">
+        select * from category_info order by ci_seq asc
+    </select>
+    <select id="selectBoardList" resultType="com.novel.service.data.BoardInfoVO">
+        select a.*, b.user_nickname as nickname from community_board_info a left outer join user_info b on a.cbi_user_seq = b.user_seq 
+        where a.cbi_name like '%${keyword}%' or b.user_nickname like '%${keyword}%'
+        <if test="type != null">
+        and cbi_ci_seq = #{type}
+        </if>
+        order by cbi_seq desc
+    </select>
+
+    <select id="selectPostBySeq" resultType="com.novel.service.data.BoardInfoVO">
+        select a.*, b.user_nickname as nickname from community_board_info a 
+        left outer join user_info b on a.cbi_user_seq = b.user_seq
+        where a.cbi_seq = #{seq}
+    </select>
+    
+    <select id="selectImageDataBySeq" resultType="java.lang.String">
+        select img_name from image_data where img_seq = #{seq}
+    </select>
+
+    <insert id="insertPostImg" parameterType="com.novel.service.data.temp.BoardRegRequest" useGeneratedKeys="true" keyProperty="seq">
+        insert into image_data (img_name)
+        values (#{img})
+    </insert>
+
+    <insert id="insertPostData">
+        INSERT INTO community_board_info
+        (cbi_user_seq, cbi_ci_seq, cbi_name, cbi_text, cbi_imgs_seq)
+        VALUES (#{cbi_user_seq}, #{cbi_ci_seq}, #{cbi_name}, #{cbi_text}, #{cbi_imgs_seq})
+    </insert>
+</mapper>

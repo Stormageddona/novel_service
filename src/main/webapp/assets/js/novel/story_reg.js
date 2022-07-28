@@ -26,7 +26,7 @@ $(function()
                     url:"/api/novel/story?seq="+$("#reg_text_btn").attr("data-seq"), type:"put",data:JSON.stringify(data2), contentType:"application/json",
                     success:function(r)
                     {
-                        alert("소설이 등록되었습니다.")
+                        alert(r.message)
                         location.href="/novel/storylist?seq="+$("#reg_text_btn").attr("data-seq")
                     }
                 })

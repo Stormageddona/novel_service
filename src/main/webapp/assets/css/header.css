@@ -1,11 +1,29 @@
-html {width: 1000px;margin: 0 auto}
-header{width: 1000px;height: 150px;border: 1px solid #000;z-index: 9999;position: relative;margin: 0 auto;text-align: center;}
-header .title {height: 100px;border: 1px solid #000;}
-header > a {margin: 0 30px;}
-bo
+html {width: 1100px;margin: 0 auto}
+header{width: 1100px;height: 175px;z-index: 9999;position: relative;margin: 0 auto;text-align:center }
+header .main_title {height: 70px;display: inline-block;}
+header .main_title a {display: inline-block;}
+#gnb {text-align: left; background-color: rgb(135, 173, 235);height: 33px;margin-top: 0px;}
+#gnb  a {color: #fff;font-size: 18px; padding-left: 40px; vertical-align: bottom;font-weight: 550;padding-top: 7px;display: inline-block;}
+body {z-index: -20;}
+a {text-decoration: none;}
 
-main {margin: 0 auto; width: 1000px;position: relative;}
-.i_main {display: inline-block;border: 1px solid #000;position: relative;height: 1500px;width: 797px;padding: 0;}
+#nav_free_area, #nav_help_area {display: none;  width: 1000px;height: 15px; text-align-last: left;}
+#nav_free_area > a , #nav_help_area > a {margin-right: 50px; text-decoration: none;color: grey;}
+#nav_free_area > a:hover , #nav_help_area > a:hover {text-decoration: underline;}
+#nav_free_area > a:first-child {margin-left: 30px;}
+#nav_help_area > a:first-child {margin-left: 350px;}
 
 
+/* main {margin: 0 auto; width: 1000px;position: relative;z-index: -999;}
+.i_main {display: inline-block;border: 1px solid #000;position: relative;height: 1500px;width: 797px;padding: 0;} */
 
+.main_logo {background: url('/assets/images/set@container_7.png') no-repeat 0 0;width: 162px;height: 49px;margin: 20px auto;}
+
+.search_area {width: 200px;height: 20px;margin-left: 900px;position: relative;margin-bottom: 20px;}
+.search_area input {text-align: left;width: 100px;margin-bottom: 20px;}
+.search_btn {background-color: rgba(0, 0, 255, 0.48);border: none;color: #fff;}
+.search_btn:hover {cursor: pointer;}
+
+.main_content_area {width: 650px;height: 800px;display: inline-block;}
+
+.style_button {background-color: rgb(243, 243, 243);border: 1px solid rgba(0, 0, 0, 0.36);font-size: 16px;font-weight: 600;border-radius: 5px; cursor: pointer;}

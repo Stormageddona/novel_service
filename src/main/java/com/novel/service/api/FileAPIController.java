@@ -20,6 +20,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,19 +28,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.novel.service.data.temp.TextDetail;
+import com.novel.service.data.temp.TextUploadRequest;
 
 @RestController
 public class FileAPIController {
     @Value("${spring.servlet.multipart.location}") String path;
-    @GetMapping("{type}/{filename}")
-    public ResponseEntity<Resource> getImage(@PathVariable String type,@PathVariable String filename, HttpServletRequest request) throws Exception
+    @GetMapping("/images/{filename}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename, HttpServletRequest request, @RequestParam @Nullable Boolean temp) throws Exception
     {
-        Path folderLocation = Paths.get(path+"/"+type) ;
+        String img_path = "/images" ;
+        if (temp != null && temp) img_path = "/images/temp" ;
+        Path folderLocation = Paths.get(path+img_path) ;
         Path filePath = folderLocation.resolve(filename) ;
         Resource r = null;
 
@@ -72,10 +77,10 @@ public class FileAPIController {
     } 
 
     @PutMapping("/image/upload")
-    public Map<String,Object> putImageUpload(@RequestPart MultipartFile file )
+    public Map<String,Object> putImageUpload(@RequestPart MultipartFile file, @RequestParam @Nullable Boolean temp)
     {
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>() ;
-        Path forderLocaion = Paths.get(path+"/images") ;
+        Path forderLocaion = Paths.get(path+"/images"+(temp!=null && temp?"/temp":"")) ;
         String fileName = file.getOriginalFilename() ;
         String[] fileNameSplit = fileName.split("\\.") ;
         String ext = fileNameSplit[fileNameSplit.length - 1] ;
@@ -113,7 +118,7 @@ public class FileAPIController {
 
     @PutMapping("/text/upload")
     @Transactional
-    public  Map<String,Object> putTextFile(@RequestBody TextDetail data) throws IOException
+    public  Map<String,Object> putTextFile(@RequestBody TextUploadRequest data) throws IOException
     {
         Map<String,Object> map = new LinkedHashMap<String,Object>() ;
         Path forderLocaion = Paths.get(path+"/text") ;
@@ -127,7 +132,7 @@ public class FileAPIController {
         bw.write(data.getDetail());
         bw.close();
         map.put("file",saveFileName) ;
-        if (data.getComment().length() > 0)
+        if (data.getComment() != null && data.getComment().length() > 0)
         {
             saveFileName = StringUtils.cleanPath("comment_" + c.getTimeInMillis() + ".txt") ;
             file = new File(forderLocaion+"/"+saveFileName) ;
@@ -159,6 +164,7 @@ public class FileAPIController {
             resultMap.put("status",false);
             resultMap.put("message","파일이 존재하지 않습니다.");
             resultMap.put("path",filepath);
+            return resultMap ;
         }
         resultMap.put("status",true);
         resultMap.put("message","파일이 삭제됬습니다.");

@@ -1,1 +1,9 @@
-.content_area {width: 190px;height: 800px; border: 1px solid #000;display: inline-block;}
+.content_area {width: 230px;vertical-align: top; border: 1px solid rgba(128, 128, 128, 0.32);display: inline-block;border-radius: 10px;}
+
+.search_box {margin-top: 20px;}
+
+.content_box { height: 700px;font-size: 15px;table-layout: fixed;}
+.content_box a {color: black;text-decoration: none;}
+.content_box .title {text-decoration: none;text-align: left;width: 200px;height: 25px;}
+.content_box .writer {color: blue;text-decoration: none;text-align: center; width: 60px;}
+.content_box tr:nth-child(2n-1) {background-color:  rgba(128, 128, 128, 0.13);;}

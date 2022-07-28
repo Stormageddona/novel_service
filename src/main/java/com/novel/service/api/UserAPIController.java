@@ -1,6 +1,7 @@
 package com.novel.service.api;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.novel.service.data.CommentInfoVO;
 import com.novel.service.data.UserInfoVO;
 import com.novel.service.mapper.UserMapper;
 import com.novel.service.util.AESAlgorithm;
@@ -53,7 +55,6 @@ public class UserAPIController {
     public void getUserLogout(HttpSession session)
     {
         session.invalidate();
-        
 
     }
 
@@ -63,12 +64,43 @@ public class UserAPIController {
     {
         Map<String,Object> map =new LinkedHashMap<String,Object>() ;
         data.setUser_pwd(AESAlgorithm.Encrypt(data.getUser_pwd()));
+        if (data.getUser_nickname() == null) data.setUser_nickname(data.getUser_name());
         u_mapper.insertUserInfo(data);
         map.put("status",true) ;
         map.put("message","회원가입이 완료되었습니다.") ;
         return map ;
     }
+    // 회원가입 중복 조회
+    @GetMapping("/join")
+    public Map<String,Object> DuplicatedChk(@RequestParam String type, @RequestParam String value)
+    {
+        Map<String,Object> map =new LinkedHashMap<String,Object>() ;
         
+
+        if (u_mapper.isDuplicatedId(value) && type.equals("id"))
+        {
+            map.put("status", false) ;
+            map.put("message", "사용중인 아이디 입니다.") ;
+            return map ;
+        }
+        else if (u_mapper.isDuplicatedEmail(value) && type.equals("email"))
+        {
+            map.put("status", false) ;
+            map.put("message", "사용중인 이메일 입니다.") ;
+            return map ;
+        }
+        else if (u_mapper.isDuplicatedNickname(value) && type.equals("nickname"))
+        {
+            map.put("status", false) ;
+            map.put("message", "사용중인 닉네임 입니다.") ;
+            return map ;
+        }
+        map.put("status", true) ;
+        map.put("message", "사용 가능 합니다.") ;
+        return map ;
+
+    }
+    
     // 아이디 비밀번호 찾기
     @GetMapping("/find")
     public Map<String,Object> findUser(@RequestParam String value1, @RequestParam String value2,@RequestParam Integer type) throws Exception
@@ -117,34 +149,63 @@ public class UserAPIController {
         return map ;
     }
 
-    // 회원가입
-    @GetMapping("/join")
-    public Map<String,Object> DuplicatedChk(@RequestParam String type, @RequestParam String value)
+
+
+    //댓글 작성
+    @PutMapping("/comment")
+    public Map<String,Object> putComment(HttpSession session,@RequestParam Integer type , @RequestParam Integer seq , @RequestBody String value)
+    {
+        Map<String,Object> map =new LinkedHashMap<String,Object>() ;
+        UserInfoVO user = (UserInfoVO)session.getAttribute("user") ;
+        String temp = "";
+        if (user == null) 
+        {
+            map.put("status", false) ;
+            map.put("message", "로그인을 다시 해주세요.") ;
+            return map ;
+        }
+        if (user.getUser_status() ==  2)  temp = "이용이 정지된 사용자 입니다.";
+        else if (user.getUser_status() ==  3)  temp = "영구정지된 사용자 입니다";
+        else if (user.getUser_status() ==  4)  temp = "탈퇴대기중인 사용자 입니다.";
+        if (user.getUser_status() !=  1)
+        {
+            map.put("status", false) ;
+            map.put("message", "댓글 입력에 실패하였습니다<br>사유 : " + temp) ;
+            return map ;
+        }
+        try {
+            u_mapper.insertUserComment(type,user.getUser_seq(),seq,value) ;
+        } catch (Exception e) {
+            map.put("status", false) ;
+            map.put("message", "댓글 입력에 실패하였습니다") ;
+            System.out.println(e);
+            return map ;
+        }
+        
+        map.put("status", true) ;
+        map.put("message", "댓글 입력에 성공하였습니다.") ;
+        return map ;
+    }
+
+    // 댓글 조회
+    @GetMapping("/comment")
+    public Map<String,Object> getComment(HttpSession session,@RequestParam Integer type , @RequestParam Integer seq)
     {
         Map<String,Object> map =new LinkedHashMap<String,Object>() ;
         
+        List<CommentInfoVO> list = u_mapper.selectCommentList(type, seq) ;
+        for(CommentInfoVO templist : list)
+        {
+            if (templist.getCmti_status() == 2)
+                templist.setCmti_text("관리자에 의해 블라인드 된 댓글입니다."); 
+            else if (templist.getCmti_status() == 3)
+                templist.setCmti_text("삭제 된 댓글입니다."); 
+        }
 
-        if (u_mapper.isDuplicatedId(value) && type.equals("id"))
-        {
-            map.put("status", false) ;
-            map.put("message", "사용중인 아이디 입니다.") ;
-            return map ;
-        }
-        else if (u_mapper.isDuplicatedEmail(value) && type.equals("email"))
-        {
-            map.put("status", false) ;
-            map.put("message", "사용중인 이메일 입니다.") ;
-            return map ;
-        }
-        else if (u_mapper.isDuplicatedNickname(value) && type.equals("nickname"))
-        {
-            map.put("status", false) ;
-            map.put("message", "사용중인 닉네임 입니다.") ;
-            return map ;
-        }
         map.put("status", true) ;
-        map.put("message", "사용 가능 합니다.") ;
+        map.put("message", "댓글 조회 완료") ;
+        map.put("list",list) ;
+        
         return map ;
-
     }
 }

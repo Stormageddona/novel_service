@@ -11,7 +11,7 @@
     <script src="/assets/js/category/free.js"></script>
 </head>
 <body>
-        <div class="free_area">
+        <div class="main_content_area">
             <table>
                 <thead>
                     <tr>

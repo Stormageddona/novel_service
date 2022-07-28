@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.novel.service.data.GenreInfoVO;
 import com.novel.service.data.NovelInfoVO;
 import com.novel.service.data.NovelStoryVO;
+import com.novel.service.data.ViewInfoVO;
 import com.novel.service.data.WriterInfoVO;
 import com.novel.service.data.temp.MyNovelList;
 import com.novel.service.data.temp.NovelReg;
@@ -35,12 +36,11 @@ public interface NovelMapper {
     public Integer selectStoryCount(Integer seq);
     public StoryInfoData selectStoryCountBySeq(Integer seq) ;
 
-    public List<NovelInfoVO> selectCategoryNovelList(Integer type) ;
 
     public void insertNovelCountData(Integer seq,Integer no_seq , Integer ns_seq) ;
     
     //조회수
-    public Boolean isNovelCountTime(Integer user_seq) ;
+    public Boolean isNovelCountTime(Integer user_seq,Integer ns_seq) ;
     public Integer selectNovelCountData(Integer ns_seq) ;
 
     //장르 
@@ -55,4 +55,8 @@ public interface NovelMapper {
     public WriterInfoVO selectWriterInfo(Integer seq) ;
     public void insertWriterInfo(WriterInfoVO data) ;
     public void updateNovelInfoWriterSeq(Integer seq, Integer no_seq) ;
+
+    // 검색
+    public List<ViewInfoVO> selectCategoryNovelList(Integer type, String keyword) ;
+
 }

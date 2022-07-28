@@ -16,7 +16,7 @@
 
 </head>
 <body>
-    <main>
+    <div class="main_content_area">
         <div class="novel_info_area">
             <div class="img_area" style="width:150px;height: 220px; background-image: url('/images/${data.img_name}');"></div>
             <div class="info_box">
@@ -31,10 +31,10 @@
                 <p>글자 수 : </p>
                 <p>즐겨찾기 수 : ${favorites}</p>
                 <c:if test="${favorite == false}">
-                    <button id="favorite_reg">즐겨찾기 등록</button>
+                    <button class="style_button" id="favorite_reg">즐겨찾기 등록</button>
                 </c:if>
                 <c:if test="${favorite == true}">
-                    <button id="favorite_del">즐겨찾기 해제</button>
+                    <button class="style_button" id="favorite_del">즐겨찾기 해제</button>
                 </c:if>
             </div>
             <div class="simple_text_box">${data.no_simple_txt}</div>
@@ -55,6 +55,6 @@
                 </tbody>
             </table>
         </div>
-    </main>
+    </div>
 </body>
 </html>
