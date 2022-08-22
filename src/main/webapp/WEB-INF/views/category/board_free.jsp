@@ -40,7 +40,9 @@
             
         </table>
         <div class="search_area"></div>
-        <button class="style_button board_reg_btn" data-seq="1" data-str="board_free">글쓰기</button>
+        <c:if test="${user != null}">
+            <button class="style_button board_reg_btn" data-seq="1" data-str="board_free">글쓰기</button>
+        </c:if>
         <div class="pager_area"></div>
     </div>
     

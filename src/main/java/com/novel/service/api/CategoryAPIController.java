@@ -91,7 +91,6 @@ public class CategoryAPIController {
         }
         br.close();
         map.put("content", content) ;
-        System.out.println(map);
         return map ;
     }
 
@@ -103,7 +102,6 @@ public class CategoryAPIController {
         UserInfoVO user = (UserInfoVO)session.getAttribute("user") ;
         BoardInfoVO bidata = new BoardInfoVO() ;
         bidata.setCbi_imgs_seq("");
-        System.out.println(data);
         if (data.getCbi_imgList() != null && data.getCbi_imgList().size() > 0)
         {
             List<String> imglist = data.getCbi_imgList() ;

@@ -8,3 +8,6 @@ public class ImageRequestData {
     private Integer seq ;
     private String img ;
 }
+
+
+
